@@ -1,0 +1,22 @@
+.container {
+    width: 70vw;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.messageList {
+    display: flex;
+    flex-direction: column;  
+}
+.messageListBg {
+    background-color: #61615c;
+    opacity: 0.3;
+    width: 70vw;
+    position: absolute;
+    z-index: -1;
+    height: 80vh;
+}
+
+.message {
+    margin: 0 0 6px 0;
+}

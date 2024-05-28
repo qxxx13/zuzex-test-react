@@ -2,9 +2,11 @@
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .avatar {
-    width: 50px;
+    width: 25px;
+    margin-right: 8px;
 }

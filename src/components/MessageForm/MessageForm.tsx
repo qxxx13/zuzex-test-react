@@ -18,8 +18,6 @@ export const MessageForm = () => {
             socket.emit('chat message', message);
             setMessage('');
         }
-
-        console.log(message);
     };
 
     return (

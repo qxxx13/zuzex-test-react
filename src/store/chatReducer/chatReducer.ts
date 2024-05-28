@@ -15,6 +15,6 @@ const chatSlice = createSlice({
 
 export const { setChatMessages } = chatSlice.actions;
 
-export const getMessages = (store: RootState) => store.chatReducer.messages;
+export const getMessages = (store: RootState): string[] => store.chatReducer.messages;
 
 export default chatSlice.reducer;

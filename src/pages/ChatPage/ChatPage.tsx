@@ -1,52 +1,73 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { ActiveUsersList } from '../../components/ActiveUsersList/ActiveUsersList';
 import { ConnectionManager } from '../../components/ConnectionManager/ConnectionManager';
 import { MessageForm } from '../../components/MessageForm/MessageForm';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { socket } from '../../socket';
+import { getMessages, setChatMessages } from '../../store/chatReducer/chatReducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+    getConnectedUsers,
+    getCurrentUser,
+    setConnectedUsers,
+    setCurrentUser,
+    setUserDisconnected,
+} from '../../store/userReducer/userReducer';
+import { getIsConnected, setIsConnected } from '../../store/wsReducer/wsReducer';
+import { UserType } from '../../types/UserType';
 import styles from './styles.module.scss';
 
 export const ChatPage = () => {
-    const [isConnected, setIsConnected] = useState(socket.connected);
-    const [messages, setMessages] = useState<string[]>([]);
-    const [connectedUser, setConnectedUser] = useState<{
-        id: number;
-        fName: string;
-        sName: string;
-        avatar: string;
-    }>();
+    const dispatch = useAppDispatch();
 
-    console.log(connectedUser);
+    const messages = useAppSelector(getMessages);
+    const currentUser = useAppSelector(getCurrentUser);
+    const activeUser = useAppSelector(getConnectedUsers);
 
     useEffect(() => {
         const onConnect = () => {
-            setIsConnected(true);
+            dispatch(setIsConnected(true));
         };
 
         const onDisconnect = () => {
-            setIsConnected(false);
+            dispatch(setIsConnected(false));
         };
 
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
-        socket.on('chat message', (msg) => {
-            console.log(msg);
-            setMessages((prev) => [...prev, msg]);
+        socket.on('chat message', (msg: string) => {
+            dispatch(setChatMessages(msg));
         });
         socket.on('user connect', (usr) => {
-            setConnectedUser(usr);
+            dispatch(setCurrentUser(usr));
+        });
+
+        socket.on('user connected', (usr: UserType[]) => {
+            dispatch(setConnectedUsers(usr));
+        });
+
+        socket.on('user disconnect', (id: string) => {
+            dispatch(setUserDisconnected(id));
         });
 
         return () => {
             socket.off('connect', onConnect);
-            socket.off('disconnect', onDisconnect);
+            socket.off('user disconnect', onDisconnect);
             socket.off('chat message');
             socket.off('user connect');
+            socket.off('user connected');
+            socket.off('user disconnect');
         };
     });
     return (
         <div className={styles.container}>
-            <h1 className={styles.username}>Hello USERNAME</h1>
+            <ActiveUsersList users={activeUser} />
+            <h1 className={styles.username}>
+                <img src={currentUser.avatar} alt="avatar" className={styles.avatar} />
+                {currentUser.fName} {currentUser.lName}
+            </h1>
             <ConnectionManager />
             <MessageForm />
             <MessageList messages={messages} />

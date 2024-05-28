@@ -14,10 +14,14 @@ export const usersSlice = createSlice({
         setCurrentUser: (state, action: PayloadAction<UserType>) => {
             state.currentUser = action.payload;
         },
+        setUserDisconnected: (state, action: PayloadAction<string>) => {
+            state.users = state.users.filter((user) => user.id !== action.payload);
+        },
     },
 });
 
-export const { setConnectedUsers, setCurrentUser } = usersSlice.actions;
+export const { setConnectedUsers, setCurrentUser, setUserDisconnected } =
+    usersSlice.actions;
 
 export const getConnectedUsers = (store: RootState) => store.userReducer.users;
 export const getCurrentUser = (store: RootState) => store.userReducer.currentUser;

@@ -12,3 +12,9 @@
     bottom: 8px;
     align-items: center;
 }
+
+.imageInput {
+    &::file-selector-button {
+        height: 36px;
+    }
+}

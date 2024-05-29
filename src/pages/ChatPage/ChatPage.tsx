@@ -40,6 +40,11 @@ export const ChatPage = () => {
         socket.on('chat message', (msg: string) => {
             dispatch(setChatMessages(msg));
         });
+
+        socket.on('image message', (img: string) => {
+            dispatch(setChatMessages(img));
+        });
+
         socket.on('user connect', (usr) => {
             dispatch(setCurrentUser(usr));
         });
@@ -56,6 +61,7 @@ export const ChatPage = () => {
             socket.off('connect', onConnect);
             socket.off('user disconnect', onDisconnect);
             socket.off('chat message');
+            socket.off('image message');
             socket.off('user connect');
             socket.off('user connected');
             socket.off('user disconnect');

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { socket } from '../../socket';
 import { Button } from '../StyledComponent/Button/Button';
+import { uploadImage } from './messageHepler/messageHelper';
 import styles from './styles.module.scss';
 
 export const MessageForm = () => {
@@ -20,12 +21,22 @@ export const MessageForm = () => {
         }
     };
 
+    const imageMessageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        uploadImage(event);
+    };
+
     return (
         <form onSubmit={handleSubmit} className={styles.chatForm}>
             <input
                 onChange={(e) => messageHandler(e)}
                 value={message}
                 className={styles.input}
+            />
+            <input
+                type="file"
+                accept="image/png, image/jpeg"
+                className={styles.imageInput}
+                onChange={(e) => imageMessageHandler(e)}
             />
             <Button type="submit">Send</Button>
         </form>

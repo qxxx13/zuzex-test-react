@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import { ActiveUsersList } from '../../components/ActiveUsersList/ActiveUsersList';
 import { ConnectionManager } from '../../components/ConnectionManager/ConnectionManager';
@@ -15,7 +14,7 @@ import {
     setCurrentUser,
     setUserDisconnected,
 } from '../../store/userReducer/userReducer';
-import { getIsConnected, setIsConnected } from '../../store/wsReducer/wsReducer';
+import { setIsConnected } from '../../store/wsReducer/wsReducer';
 import { UserType } from '../../types/UserType';
 import styles from './styles.module.scss';
 
@@ -64,7 +63,6 @@ export const ChatPage = () => {
             socket.off('image message');
             socket.off('user connect');
             socket.off('user connected');
-            socket.off('user disconnect');
         };
     });
     return (

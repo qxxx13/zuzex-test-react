@@ -1,20 +1,28 @@
-.input {
-    border-radius: 8px;
-    height: 30px;
-    width: 100%;
-}
-
 .chatForm {
     display: flex;
-    width: 100vw;
+    width: 100%;
     position: absolute;
     left: 0;
     bottom: 8px;
     align-items: center;
-}
+    gap: 8px;
 
-.imageInput {
-    &::file-selector-button {
-        height: 36px;
+    .input {
+        border-radius: 8px;
+        height: 30px;
+        width: 100%;
+        margin-left: 16px;
     }
+
+    .imageInput {
+        &::file-selector-button {
+            height: 36px;
+        }
+    }
+
+    .buttonContainer {
+        width: 20%;
+        margin-right: 16px;
+    }
+
 }

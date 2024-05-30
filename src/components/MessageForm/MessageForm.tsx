@@ -38,7 +38,9 @@ export const MessageForm = () => {
                 className={styles.imageInput}
                 onChange={(e) => imageMessageHandler(e)}
             />
-            <Button type="submit">Send</Button>
+            <div className={styles.buttonContainer}>
+                <Button type="submit">Send</Button>
+            </div>
         </form>
     );
 };
